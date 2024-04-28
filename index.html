@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lista de Tarefas</h1>
+        <form id="formTarefa">
+            <div>
+                <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" required>
+            </div>
+            <div>
+                <label for="data">Data:</label>
+                <input type="date" id="data" required>
+            </div>
+            <div>
+                <label for="comentario">Comentário:</label>
+                <input type="text" id="comentario" required>
+            </div>
+            <div>
+                <label for="prioridade">Prioridade:</label>
+                <select id="prioridade">
+                    <option value="alta">Alta</option>
+                    <option value="media">Média</option>
+                    <option value="baixa">Baixa</option>
+                </select>
+            </div>
+            <div>
+                <label for="data_criacao">Data de Criação:</label>
+                <input type="date" id="data_criacao" required>
+            </div>
+            <div>
+                Notificações?
+                <input type="radio" id="sim" name="notificacoes" value="Sim">
+                <label for="sim">Sim</label>
+                <input type="radio" id="nao" name="notificacoes" value="Nao">
+                <label for="nao">Nao</label>
+            </div>
+            <button type="submit">Adicionar Tarefa</button>
+            <button type="reset">Cancelar</button>
+        </form>
+        <ul id="listaTarefas"></ul>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
