@@ -40,11 +40,6 @@ function resetForm() {
 
 function adicionarTarefaNaLista() {
     const tarefa = listaDeTarefas.slice(-1)[0]; //pega o ultimo elemento da lista
-    /*const li = document.createElement('li');
-    li.classList.add('tarefa');
-    li.innerHTML = `<strong>${formataData(tarefa.data)}</strong>: ${tarefa.descricao} | Prioridade: ${tarefa.prioridade}`;
-    li.setAttribute('id', `${tarefa.id}`);
-    listaTarefas.appendChild(li);*/
     const card = criarCard(tarefa);
     listaTarefas.appendChild(card);
     console.log(JSON.stringify(tarefa));
