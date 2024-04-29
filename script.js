@@ -40,12 +40,59 @@ function resetForm() {
 
 function adicionarTarefaNaLista() {
     const tarefa = listaDeTarefas.slice(-1)[0]; //pega o ultimo elemento da lista
-    const li = document.createElement('li');
+    /*const li = document.createElement('li');
     li.classList.add('tarefa');
     li.innerHTML = `<strong>${formataData(tarefa.data)}</strong>: ${tarefa.descricao} | Prioridade: ${tarefa.prioridade}`;
     li.setAttribute('id', `${tarefa.id}`);
-    listaTarefas.appendChild(li);
+    listaTarefas.appendChild(li);*/
+    const card = criarCard(tarefa);
+    listaTarefas.appendChild(card);
     console.log(JSON.stringify(tarefa));
+}
+
+function criarCard(tarefa) {
+    const card = document.createElement('div');
+    card.classList.add('tarefa');
+    card.classList.add('card');
+    card.setAttribute('id', `${tarefa.id}`);
+
+    const card_header = document.createElement('div');
+    card_header.classList.add('card-header');
+    card_header.innerHTML = `<strong>${formataData(tarefa.data)}</strong>: ${tarefa.descricao} | Prioridade: ${tarefa.prioridade}`;
+
+    const card_body = document.createElement('div');
+    card_body.classList.add('card-body');
+    card_body.innerHTML = `<p class = "card-text">Data de criação: ${formataData(tarefa.data_criacao)}</p>
+                           <p class = "card-text">${tarefa.comentario}</p>`;
+    
+    const button_remove = document.createElement('button');
+    button_remove.classList.add('btn');
+    button_remove.classList.add('btn-danger');
+    button_remove.setAttribute('type', 'button');
+    button_remove.setAttribute('onclick', `removerTarefa(${tarefa.id})`);
+    button_remove.innerHTML = "Remover";
+
+    const button_edit = document.createElement('button');
+    button_edit.classList.add('btn');
+    button_edit.classList.add('btn-primary');
+    button_edit.setAttribute('type', 'button');
+    button_edit.setAttribute('onclick', `editarTarefa(${tarefa.id})`);
+    button_edit.innerHTML = "Editar";
+
+    card_body.appendChild(button_remove);
+    card_body.appendChild(button_edit);
+    card.appendChild(card_header);
+    card.appendChild(card_body);
+
+    return card;
+}
+
+function removerTarefa(idTarefa) {
+    console.log(`Removendo tarefa ${idTarefa}`);
+}
+
+function editarTarefa(idTarefa) {
+    console.log(`Editando tarefa ${idTarefa}`);
 }
 
 function gerarIdTarefa() {
