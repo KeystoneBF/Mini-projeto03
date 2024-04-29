@@ -60,8 +60,20 @@ function criarCard(tarefa) {
     card_header.classList.add('card-header');
     card_header.innerHTML = `<strong>${formataData(tarefa.data)}</strong>: ${tarefa.descricao} | Prioridade: ${tarefa.prioridade}`;
 
+    const button_toggle = document.createElement('button');
+    button_toggle.classList.add('btn');
+    button_toggle.classList.add('btn-primary');
+    button_toggle.setAttribute('type', 'button');
+    button_toggle.setAttribute('data-bs-toggle', 'collapse');
+    button_toggle.setAttribute('data-bs-target', `#tarefa${tarefa.id}`);
+    button_toggle.setAttribute('aria-expanded', 'false');
+    button_toggle.setAttribute('aria-controls', `tarefa${tarefa.id}`);
+    button_toggle.innerHTML = "Expandir";
+
     const card_body = document.createElement('div');
+    card_body.classList.add('collapse');
     card_body.classList.add('card-body');
+    card_body.setAttribute('id', `tarefa${tarefa.id}`);
     card_body.innerHTML = `<p class = "card-text">Data de criação: ${formataData(tarefa.data_criacao)}</p>
                            <p class = "card-text">${tarefa.comentario}</p>`;
     
@@ -79,6 +91,7 @@ function criarCard(tarefa) {
     button_edit.setAttribute('onclick', `editarTarefa(${tarefa.id})`);
     button_edit.innerHTML = "Editar";
 
+    card_header.appendChild(button_toggle);
     card_body.appendChild(button_remove);
     card_body.appendChild(button_edit);
     card.appendChild(card_header);
