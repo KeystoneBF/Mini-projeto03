@@ -11,50 +11,71 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container overflow-hidden">
         <br>
-        <div class="row justify-content-center">
-            <div class="col-md-6 mx-auto bg-primary-subtle border border-primary-subtle rounded-3">
-                <h1>Lista de Tarefas</h1>
-                <form id="formTarefa">
-                    <div class="mb-3">
-                        <label for="descricao" class="form-label">Descrição:</label>
-                        <input type="text" class="form-control border-dark-subtle" id="descricao" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="data" class="form-label">Data:</label>
-                        <input type="date" class="form-control border-dark-subtle" id="data" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="comentario" class="form-label">Comentário:</label>
-                        <input type="text" class="form-control border-dark-subtle" id="comentario" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="prioridade" class="form-label">Prioridade:</label>
-                        <select id="prioridade" class="form-select border-dark-subtle">
-                            <option value="Alta">Alta</option>
-                            <option value="Media">Média</option>
-                            <option value="Baixa">Baixa</option>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="p-3 bg-primary-subtle border border-primary-subtle rounded-3">
+                    <h1>Cadastro de Tarefas</h1>
+                    <hr>
+                    <form id="formTarefa">
+                        <div class="mb-3">
+                            <label for="descricao" class="form-label">Descrição:</label>
+                            <input type="text" class="form-control border-dark-subtle" id="descricao" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="data" class="form-label">Data:</label>
+                            <input type="date" class="form-control border-dark-subtle" id="data" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="comentario" class="form-label">Comentário:</label>
+                            <input type="text" class="form-control border-dark-subtle" id="comentario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prioridade" class="form-label">Prioridade:</label>
+                            <select id="prioridade" class="form-select border-dark-subtle">
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Média</option>
+                                <option value="Baixa">Baixa</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="data_criacao" class="form-label">Data de Criação:</label>
+                            <input type="date" class="form-control border-dark-subtle" id="data_criacao" disabled>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input class="form-check-input border-dark-subtle" type="checkbox" value=""
+                                id="notificacao">
+                            <label class="form-check-label" for="notificacao">
+                                Notificar sobre esta tarefa.
+                            </label>
+                        </div>
+                        <div class="d-grid gap-2 d-sm-block">
+                            <button type="submit" class="btn btn-success" id="adicionar">Adicionar Tarefa</button>
+                            <button type="button" class="btn btn-danger" id="cancelar"
+                                onclick="resetForm()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 bg-primary-subtle border border-primary-subtle rounded-3">
+                    <h1>Lista de Tarefas</h1>
+                    <hr>
+                    <p id="avisoLista">Não há tarefas cadastradas.</p>
+
+                    <div class="input-group mb-3" id="opcaoOrdenar" style="display: none">
+                        <label for="prioridade" class="input-group-text border-dark-subtle">Ordenar por:</label>
+                        <select id="ordem" class="form-select border-dark-subtle">
+                            <option value="data_criacao">Data de Criação da Tarefa</option>
+                            <option value="data">Data da Tarefa</option>
+                            <option value="prioridade">Prioridade</option>
+                            <option value="alfabetica">Descrição</option>
                         </select>
+                        <button type="button" class="btn btn-success" onclick="ordenar()">Ok</button>
                     </div>
-                    <div class="mb-3">
-                        <label for="data_criacao" class="form-label">Data de Criação:</label>
-                        <input type="date" class="form-control border-dark-subtle" id="data_criacao" disabled>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input class="form-check-input border-dark-subtle" type="checkbox" value="" id="notificacao">
-                        <label class="form-check-label" for="notificacao">
-                            Notificar sobre esta tarefa.
-                        </label>
-                      </div>
-                    <div class="d-grid gap-2 d-sm-block">
-                        <button type="submit" class="btn btn-success" id="adicionar">Adicionar Tarefa</button>
-                        <button type="button" class="btn btn-danger" id="cancelar" onclick="resetForm()">Cancelar</button>
-                    </div>
-                </form>
-                <hr>
-                <p id="avisoLista">Não há tarefas cadastradas.</p>
-                <div id="listaTarefas"></div><br>
+                    <div id="listaTarefas"></div>
+                </div>
             </div>
         </div>
         <br>

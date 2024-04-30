@@ -19,7 +19,10 @@ const data_criacao = document.getElementById('data_criacao');
 const prioridade = document.getElementById('prioridade');
 const notificacao = document.getElementById('notificacao');
 const botaoSalvar = document.getElementById('adicionar');
+
 const avisoLista = document.getElementById('avisoLista');
+const opcaoOrdenar = document.getElementById('opcaoOrdenar');
+const ordem = document.getElementById('ordem');
 
 setDataInicial();
 
@@ -50,6 +53,8 @@ function adicionarTarefaNaLista() {
     const listaVazia = verificarListaTarefas();
     if(!listaVazia) {
         avisoLista.style.display = "none";
+        ordem.selectedIndex = 0;
+        opcaoOrdenar.removeAttribute('style');
     }
 }
 
@@ -109,10 +114,11 @@ function removerTarefa(idTarefa) {
     const tarefa = document.getElementById(idTarefa);
     tarefa.remove();
 
-    // Verifica se a lista está vazia para exibir ou não o aviso
+    // Verifica se a lista está vazia para exibir ou não o aviso e a opção de ordenação
     const listaVazia = verificarListaTarefas();
     if(listaVazia) {
         avisoLista.style.display = "block";
+        opcaoOrdenar.style.display = "none";
     }
 }
 
