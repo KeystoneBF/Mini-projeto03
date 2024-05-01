@@ -41,6 +41,9 @@ formTarefa.addEventListener('submit', function (event) {
 function resetForm() {
     formTarefa.reset();
     setDataInicial();
+
+    botaoSalvar.setAttribute('type', 'submit');
+    botaoSalvar.removeAttribute('onclick');
 }
 
 function adicionarTarefaNaLista() {
