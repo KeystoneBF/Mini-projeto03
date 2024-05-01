@@ -48,10 +48,10 @@ function adicionarTarefaNaLista() {
     const card = criarCard(tarefa);
     listaTarefas.appendChild(card);
     console.log(JSON.stringify(tarefa));
-    
+
     // Verifica que a lista não está mais vazia e remove o aviso
     const listaVazia = verificarListaTarefas();
-    if(!listaVazia) {
+    if (!listaVazia) {
         avisoLista.style.display = "none";
         ordem.selectedIndex = 0;
         opcaoOrdenar.removeAttribute('style');
@@ -85,7 +85,7 @@ function criarCard(tarefa) {
     card_body.setAttribute('id', `detalhes${tarefa.id}`);
     card_body.innerHTML = `<p class = "card-text">Data de criação: ${formataData(tarefa.data_criacao)}</p>
                            <p class = "card-text">${tarefa.comentario}</p>`;
-    
+
     const button_remove = document.createElement('button');
     button_remove.classList.add('btn');
     button_remove.classList.add('btn-danger');
@@ -116,7 +116,7 @@ function removerTarefa(idTarefa) {
 
     // Verifica se a lista está vazia para exibir ou não o aviso e a opção de ordenação
     const listaVazia = verificarListaTarefas();
-    if(listaVazia) {
+    if (listaVazia) {
         avisoLista.style.display = "block";
         opcaoOrdenar.style.display = "none";
     }
@@ -129,7 +129,7 @@ function verificarListaTarefas() {
 function editarTarefa(idTarefa) {
     console.log(`Editando tarefa ${idTarefa}`);
     // Encontrar a tarefa pelo id
-    const tarefaEncontrada = listaDeTarefas.find(tarefa => tarefa.id === idTarefa);
+    let tarefaEncontrada = listaDeTarefas.find(tarefa => tarefa.id === idTarefa);
 
     // Carregar os atributos dela nos campos do formulário
     descricao.value = tarefaEncontrada.descricao;
@@ -149,8 +149,12 @@ function salvarTarefa(idTarefa) {
     let tarefaEncontrada = listaDeTarefas.find(tarefa => tarefa.id === idTarefa);
 
     // Alterar os valores da tarefa
-    tarefaEncontrada = new Tarefa(idTarefa, descricao.value, data.value, comentario.value, data_criacao.value, prioridade.value, notificacao.checked);
-    
+    tarefaEncontrada.descricao = descricao.value;
+    tarefaEncontrada.data = data.value;
+    tarefaEncontrada.comentario = comentario.value;
+    tarefaEncontrada.prioridade = prioridade.value;
+    tarefaEncontrada.notificacao = notificacao.checked;
+
     // Alterar a visualização da tarefa na listagem da página
     const atualCardTarefa = document.getElementById(idTarefa);
     atualCardTarefa.setAttribute('id', 'cardParaRemover');
@@ -163,6 +167,98 @@ function salvarTarefa(idTarefa) {
     // Voltar o botão ao normal
     botaoSalvar.removeAttribute('onclick');
     botaoSalvar.setAttribute('type', 'submit');
+}
+
+function ordenar() {
+    const tipo_ordenacao = ordem.value;
+
+    if (tipo_ordenacao == "data") {
+        ordenarPorData();
+    } else if (tipo_ordenacao == "prioridade") {
+        ordenarPorPrioridade();
+    } else if (tipo_ordenacao == "descricao") {
+        ordenarPorDescricao();
+    } else {
+        ordenarPorDataCriacao();
+    }
+}
+
+function ordenarPorData() {
+    listaDeTarefas.sort(function (a, b) {
+        let dataA = new Date(a.data);
+        let dataB = new Date(b.data);
+
+        if (dataA.getTime() < dataB.getTime()) {
+            return -1;
+        }
+        if (dataA.getTime() > dataB.getTime()) {
+            return 1;
+        }
+        return 0;
+    });
+    reecreverLista();
+}
+
+function ordenarPorPrioridade() {
+    listaDeTarefas.sort(function (a, b) {
+        let priorA = a.prioridade;
+        let priorB = b.prioridade;
+
+        if (priorA == "Alta" && priorB != "Alta") {
+            return -1;
+        }
+        if (priorA == "Media" && priorB == "Alta") {
+            return 1;
+        }
+        if (priorA == "Media" && priorB == "Baixa") {
+            return -1;
+        }
+        if (priorA == "Baixa" && priorB != "Baixa") {
+            return 1;
+        }
+        return 0;
+    });
+    reecreverLista();
+}
+
+function ordenarPorDescricao() {
+    listaDeTarefas.sort(function (a, b) {
+        let descA = a.descricao.toLowerCase();
+        let descB = b.descricao.toLowerCase();
+
+        if (descA < descB) {
+            return -1;
+        }
+        if (descA > descB) {
+            return 1;
+        }
+        return 0;
+    });
+    reecreverLista();
+}
+
+function reecreverLista() {
+    listaTarefas.innerHTML = "";
+    listaDeTarefas.forEach(tarefa => {
+        const card = criarCard(tarefa);
+        listaTarefas.appendChild(card);
+    });
+}
+
+function ordenarPorDataCriacao() {
+    listaDeTarefas.sort(function (a, b) {
+        let dataA = new Date(a.data_criacao);
+        let dataB = new Date(b.data_criacao);
+
+        if (dataA.getTime() < dataB.getTime()) {
+            return -1;
+        }
+        if (dataA.getTime() > dataB.getTime()) {
+            return 1;
+        }
+        return 0;
+    });
+    reecreverLista();
 }
 
 function gerarIdTarefa() {
@@ -178,7 +274,7 @@ function setDataInicial() {
 }
 
 function formataData(data) {
-    const dataEscolhida = new Date(data+"T12:00:00");
+    const dataEscolhida = new Date(data + "T12:00:00");
     const dia = dataEscolhida.getDate().toString().padStart(2, '0');
     const mes = (dataEscolhida.getMonth() + 1).toString().padStart(2, '0');
     const ano = dataEscolhida.getFullYear();
